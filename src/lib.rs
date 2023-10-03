@@ -51,7 +51,6 @@ use base64::{
     Engine as _,
 };
 
-//use models::models::FundsTransferPesalinkAccountInputDetails;
 use models::external::mobilemoney::send_to_mobile::FundsTransferMobileWalletInputDetails;
 use models::external::pesalink::send_to_account::FundsTransferPesalinkAccountInputDetails;
 

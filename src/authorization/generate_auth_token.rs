@@ -13,9 +13,11 @@ pub async fn get_auth_token(
     let mut params = Vec::new();
 
     params.push(("grant_type", grant_type));
+    /*
     println!("api_key {:?}", &api_key);
     println!("params {:?}", &params);
     println!("api_url {:?}", &api_url);
+    */
 
     let client = reqwest::Client::new();
 
@@ -35,7 +37,7 @@ pub async fn get_auth_token(
                 StatusCode::OK => {
                     match response.json::<AuthTokenResponseData>().await {
                         Ok(auth_token_data) => {
-                            println!("auth_token_data {:?}", auth_token_data);
+                            //println!("auth_token_data {:?}", auth_token_data);
                             // Handle success case
                             let k = String::from(""); //Default value.
                             let access_token = auth_token_data.access_token.as_ref().unwrap_or(&k);

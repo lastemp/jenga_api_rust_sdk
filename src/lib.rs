@@ -58,13 +58,13 @@ use models::external::pesalink::send_to_account::FundsTransferPesalinkAccountInp
 const AUTHORISATION_BEARER: &str = "Bearer";
 const GRANT_TYPE: &str = "client_credentials";
 
-const AUTH_TOKEN_URL_SANDBOX: &str = "https://developer.co-opbank.co.ke/token";
-const AUTH_TOKEN_URL_PROD: &str = "https://developer.co-opbank.co.ke/token";
+const AUTH_TOKEN_URL_SANDBOX: &str = "https://uat.finserve.africa/v3-apis/token";
+const AUTH_TOKEN_URL_PROD: &str = "https://uat.finserve.africa/v3-apis/token";
 
 const PESALINK_SEND_TO_ACCOUNT_URL_SANDBOX: &str =
-    "https://developer.co-opbank.co.ke/FundsTransfer/External/A2A/PesaLink/1.0.0";
+    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/sendmobile";
 const PESALINK_SEND_TO_ACCOUNT_URL_PROD: &str =
-    "https://developer.co-opbank.co.ke/FundsTransfer/External/A2A/PesaLink/1.0.0";
+    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/sendmobile";
 
 #[derive(Debug)]
 pub struct JengaApiGateway {

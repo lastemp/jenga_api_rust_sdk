@@ -61,8 +61,13 @@ const AUTH_TOKEN_URL_SANDBOX: &str = "https://uat.finserve.africa/v3-apis/token"
 const AUTH_TOKEN_URL_PROD: &str = "https://uat.finserve.africa/v3-apis/token";
 
 const PESALINK_SEND_TO_ACCOUNT_URL_SANDBOX: &str =
-    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/sendmobile";
+    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/pesalinkacc";
 const PESALINK_SEND_TO_ACCOUNT_URL_PROD: &str =
+    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/pesalinkacc";
+
+const SEND_TO_MOBILE_WALLET_URL_SANDBOX: &str =
+    "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/sendmobile";
+const SEND_TO_MOBILE_WALLET_URL_PROD: &str =
     "https://uat.finserve.africa/v3-apis/transaction-api/v3.0/remittance/sendmobile";
 
 #[derive(Debug)]
@@ -80,6 +85,7 @@ pub struct JengaApiGateway {
     account_to_account_transfer_url: String,
     */
     pesalink_send_to_account_url: String,
+    send_to_mobile_wallet_url: String,
     //pesalink_send_to_phone_url: String,
 }
 
@@ -123,6 +129,12 @@ impl JengaApiGateway {
             PESALINK_SEND_TO_ACCOUNT_URL_SANDBOX.to_string()
         };
 
+        let send_to_mobile_wallet_url = if _env.eq_ignore_ascii_case(&String::from("prod")) {
+            SEND_TO_MOBILE_WALLET_URL_PROD.to_string()
+        } else {
+            SEND_TO_MOBILE_WALLET_URL_SANDBOX.to_string()
+        };
+
         Ok(Self {
             grant_type,
             consumer_key,
@@ -137,6 +149,7 @@ impl JengaApiGateway {
             account_to_account_transfer_url,
             */
             pesalink_send_to_account_url,
+            send_to_mobile_wallet_url,
             //pesalink_send_to_phone_url,
         })
     }
@@ -238,7 +251,7 @@ impl JengaApiGateway {
             Ok(access_token_result) => {
                 // Handle success case
                 let access_token: String = self.parse_auth_token(access_token_result);
-                let api_url = &self.pesalink_send_to_account_url;
+                let api_url = &self.send_to_mobile_wallet_url;
 
                 let _result = funds_transfer::external::mobilemoney::send_to_mobile::transfer(
                     account_details,
@@ -257,19 +270,17 @@ impl JengaApiGateway {
     }
 }
 
-/*
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn test_jenga_api_gateway() {
+        let consumer_key = String::from("***");
+        let consumer_secret = String::from("***");
+        let _env = String::from("sandbox");
+
+        let _result = JengaApiGateway::new(consumer_key, consumer_secret, _env);
+        assert_eq!(_result.is_ok(), true);
     }
 }
-*/
